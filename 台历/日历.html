@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./iconfont.js"></script>
+    <link href="./font.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            user-select: none;
+            color: #4b267a;
+
+        }
+
+        /* 从右侧看 */
+        .backAll {
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            perspective-origin: 100% 50%;
+            /* margin: 100px auto; */
+            position: relative;
+            border: 1px white solid;
+        }
+
+        .wrap {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            margin: 100px auto;
+        }
+
+        .paperbox {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            left: 25px;
+        }
+
+        .l1 {
+            left: 135px;
+        }
+
+        .l2 {
+            left: 265px;
+        }
+
+        .l3 {
+            left: 375px;
+        }
+
+        .paper {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            top: 1px;
+            font: bold 20px "Times New Roman";
+            line-height: 150px;
+            text-align: center;
+            border: #b6bcc7 1px solid;
+            transform-origin: top center;
+            transition: transform 2s ease-out;
+            transform: rotateX(30deg);
+            /* backface-visibility: hidden; */
+            background-color: #e4ebee;
+            z-index: 6;
+            border-radius: 10%;
+        }
+
+        .pink {
+            border: #e4c2e3 1px solid;
+            background-color: #f5adc9;
+        }
+
+        .green {
+            border: #a9c0a6 1px solid;
+            background-color: #c8e7d2;
+        }
+
+        .blue {
+            background-color: #e4ebee;
+            border: #b6bcc7 1px solid;
+        }
+
+        /* 里面的纸壳 */
+        .box {
+            position: absolute;
+            width: 500px;
+            height: 300px;
+            border: black 1px solid;
+            transform-origin: top center;
+            transition: transform 1s;
+            transform: rotateX(30deg);
+            background: url("画板组合1.jpg") no-repeat;
+            background-size: cover;
+            z-index: 5;
+            border-radius: 10%;
+        }
+
+        .back {
+            transform: rotateX(330deg);
+            z-index: 4;
+        }
+
+        .btn {
+            width: 50px;
+            height: 20px;
+            border-radius: 15%;
+            background-color: #d0d6e2;
+
+            margin: 0 20px;
+        }
+
+        .btn:nth-child(2) {
+            margin: 0 32px;
+        }
+
+        .btn:nth-child(3) {
+            margin: 0 35px 0 45px;
+        }
+
+        .btnBox {
+            position: absolute;
+            top: 160px;
+            width: 500px;
+            padding: 0 33px;
+        }
+
+        .boxYear {
+            position: absolute;
+            top: 193px;
+            left: 60px;
+            line-height: 100px;
+            text-align: center;
+            font-size: 87px;
+
+        }
+
+        .boxTime {
+            position: absolute;
+            top: 193px;
+            left: 300px;
+            line-height: 100px;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 45px;
+
+        }
+
+        /* 日历 */
+        .date {
+            width: 400px;
+            height: 400px;
+            /* border: 1px black solid; */
+            box-sizing: border-box;
+            font-size: 110%;
+            background: url("日期组合1.jpg") no-repeat;
+            background-size: cover;
+            position: absolute;
+            left: 40%;
+            opacity: 0.9;
+            z-index: 90;
+            color: #0b0a5c;
+        }
+
+
+        /* 皮肤界面 */
+        .skin {
+            width: 400px;
+            height: 400px;
+            /* border: 1px black solid; */
+            box-sizing: border-box;
+            position: absolute;
+            background: #e6dcdc;
+            left: 40%;
+            z-index: 99;
+            display: none;
+        }
+
+        .skin-content {
+            width: 400px;
+            height: 350px;
+            /* border: 1px black solid; */
+            box-sizing: border-box;
+            position: absolute;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .skin-content .each {
+            width: 150px;
+            height: 150px;
+            border-radius: 20%;
+            border: 1px #d19898 solid;
+            padding-top: 10px;
+
+        }
+
+        .each div {
+            height: 50px;
+            width: 150px;
+            padding-left: 5px;
+            box-sizing: border-box;
+
+        }
+
+        .skin-title {
+            padding: 5px 0 5px;
+            text-align: center;
+            width: 150px;
+        }
+
+        .each div:last-child {
+            padding: 15px;
+
+        }
+
+        .each img {
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+            margin-left: 20px;
+        }
+
+        .each div span {
+            text-decoration: line-through
+        }
+
+        .each div button {
+            width: 40px;
+            height: 20px;
+        }
+        .date-title-wrap {
+            height:50px;
+        }
+        .date-title {
+            display: inline-block;
+            height: 50px;
+            width: 310px;
+            padding-left:100px;
+            line-height: 50px;
+            /* border-bottom: 1px black solid; */
+            box-sizing: border-box;
+            letter-spacing: 1px;
+        }
+
+        .date-title-wrap button{
+            display: inline-block;
+            width: 70px;
+            height: 25px;
+            background-color: #a1e785;
+        }
+
+
+        td {
+            width: 30px;
+            height: 30px;
+            box-sizing: border-box;
+            padding: 3px;
+        }
+
+        .date-context {
+            height: 350px;
+            width: 400px;
+            border-spacing: 0px;
+        }
+
+        tr {
+            height: 40px;
+            width: 400px;
+            display: flex;
+            justify-content: space-around;
+            /* border-bottom: 1px black solid; */
+            align-items: center;
+        }
+
+        .dateFiveRow {
+            height: 62px;
+        }
+
+        .dateSixRow {
+            height: 51.7px;
+        }
+
+        .selected {
+            border: 1px black solid;
+            border-radius: 50%;
+        }
+
+        /* 蒙版 */
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 99;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .showMack {
+            display: none;
+        }
+
+        .disabled {
+            pointer-events: none;
+        }
+
+        .datebox {
+            color: grey
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var ln0 = document.getElementsByClassName("ln0")
+            var ln1 = document.getElementsByClassName("ln1")
+            var ln2 = document.getElementsByClassName("ln2")
+            var ln3 = document.getElementsByClassName("ln3")
+            var paperbox0 = document.getElementsByClassName("paperbox")[0]
+            var paperbox1 = document.getElementsByClassName("paperbox")[1]
+            var paperbox2 = document.getElementsByClassName("paperbox")[2]
+            var paperbox3 = document.getElementsByClassName("paperbox")[3]
+            var btn = document.getElementsByClassName("btn")
+            var body1 = document.getElementsByTagName("body")[0]
+
+            //当前日期
+            var nowTime = new Date()
+            var nowDate = nowTime.getDate()
+            var nowWeekDay = nowTime.getDay()
+            var nowMonth = nowTime.getMonth()
+            var nowYear = nowTime.getFullYear()
+
+            //得到指定月的天数
+            function getDrawMonthDay() {
+                if (drawYear % 4 == 0) {
+                    var nowMonthDay = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    return nowMonthDay
+                } else {
+                    var nowMonthDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    return nowMonthDay
+                }
+            }
+
+            var drawMonth = nowMonth + 1
+            var drawYear = nowYear
+            var drawDate = nowDate
+            var afterSvg = document.getElementById("afterSvg")
+            var beforeSvg = document.getElementById("beforeSvg")
+            var boxNowTime = document.getElementsByClassName("boxTime")[0]
+
+            //皮肤
+            var skinColor = " blue"
+            nowTime = Date()
+            boxNowTime.innerHTML = nowTime.substring(16, 24)
+            function getNowTime() {
+                setInterval(function () {
+                    nowTime = Date()
+                    boxNowTime.innerHTML = nowTime.substring(16, 24)
+                }, 1000)
+            }
+            getNowTime()
+
+            function flip(paperbox, butn, now) {
+                var rowNumber = paperbox.className.substring(10, 11)
+                var length = paperbox.children.length
+                //设置每一页的index值
+                for (var i = 0; i < length; i++) {
+                    paperbox.children[i].style.zIndex = length + 6 - i + 10 * rowNumber
+                }
+                for (var i = 0; i < now; i++) {
+                    paperbox.children[i].style.transform = "rotateX(330deg)"
+                    paperbox.children[i].style.zIndex = 3
+                }
+
+                //给翻回按钮添加点击事件
+                butn.onclick = function () {
+                    paperbox.style.pointerEvents = "none"
+                    //更新所有列回到初始状态
+                    if (rowNumber == 0) {
+                        drawMonth = 1
+                        drawDate = 1
+                        eachPaper(9, paperbox1, "paper ln1", true)
+                        eachPaper(parseInt(getDrawMonthDay()[drawMonth] / 10), paperbox2, "paper ln2")
+                        eachPaper(9, paperbox3, "paper ln3", true)
+                        flip(paperbox1, btn[1])
+                        flip(paperbox2, btn[2])
+                        flip(paperbox3, btn[3])
+                        //更新日期列回到初始状态
+                    } else if (rowNumber == 1) {
+                        if (drawMonth > 9) {
+                            drawMonth = drawMonth - drawMonth % 10
+                        } else {
+                            drawMonth = drawMonth - drawMonth % 10 + 1
+                        }
+                        drawDate = 1
+                        eachPaper(parseInt(getDrawMonthDay()[drawMonth - 1] / 10), paperbox2, "paper ln2")
+                        eachPaper(9, paperbox3, "paper ln3", true)
+                        flip(paperbox2, btn[2])
+                        flip(paperbox3, btn[3])
+                        //更新日期个位数列回到初始状态
+                    } else if (rowNumber == 2) {
+                        drawDate = 1
+                        eachPaper(9, paperbox3, "paper ln3", true)
+                        flip(paperbox3, btn[3])
+                    }
+                    setInterval(function () {
+                        paperbox.style.pointerEvents = "auto"
+                    }, 2000)
+                    for (var i = length - 1; i > -1; i--) {
+                        paperbox.children[i].style.transform = "rotateX(30deg)"
+                            ; (function (i) {
+                                var timeOut1 = setTimeout(function () {
+                                    paperbox.children[i].style.zIndex = length + 6 - i + 10 * rowNumber
+                                    clearInterval(timeOut1)
+                                }, 300)
+                            })(i)
+                    }
+                }
+
+                // 鼠标点击翻页
+                for (var i = 0; i < length; i++) {
+                    (function (i) {
+                        paperbox.children[i].onclick = function () {
+                            if (i == length - 1) {
+                                return false
+                            }
+                            if (rowNumber == 0 && paperbox.children[i].innerHTML == 0) {
+                                // var brotherRowNumber = paperbox.nextSibling.nextSibling.className.substring(10, 11)
+                                //更改当前月
+                                drawMonth = 10
+                                drawDate = 1
+                                eachPaper(2, paperbox1, "paper ln1")
+                                eachPaper(parseInt(getDrawMonthDay()[drawMonth - 1] / 10), paperbox2, "paper ln2")
+                                eachPaper(9, paperbox3, "paper ln3", true)
+                                flip(paperbox2, btn[2])
+                                flip(paperbox3, btn[3])
+                                flip(paperbox1, btn[1])
+                            } else if (rowNumber == 1) {
+                                //更改当前月
+                                drawMonth = drawMonth - drawMonth % 10 + parseInt(paperbox.children[i].innerHTML) + 1
+                                drawDate = 1
+                                eachPaper(parseInt(getDrawMonthDay()[drawMonth - 1] / 10), paperbox2, "paper ln2")
+                                eachPaper(10, paperbox3, "paper ln3", true)
+                                flip(paperbox2, btn[2])
+                                flip(paperbox3, btn[3])
+                            } else if (rowNumber == 2 && paperbox.children[i].innerHTML == paperbox.children.length - 2) {
+                                drawDate = (parseInt(paperbox.children[i].innerHTML) + 1) * 10
+                                //更新日期个位数列的页数                              
+                                eachPaper(getDrawMonthDay()[drawMonth - 1] % 10, paperbox3, "paper ln3")
+                                flip(paperbox3, btn[3])
+                            } else if (rowNumber == 2 && paperbox.children[i].innerHTML != paperbox.children.length - 2) {
+                                drawDate = (parseInt(paperbox.children[i].innerHTML) + 1) * 10
+                                eachPaper(9, paperbox3, "paper ln3")
+                                flip(paperbox3, btn[3])
+                            } else if (rowNumber == 3) {
+                                drawDate = drawDate - drawDate % 10 + parseInt(paperbox.children[i].innerHTML) + 1
+                            }
+                            this.style.transform = "rotateX(330deg)"
+                            var that = this;
+                            // 保持翻页0.5s内的z-index,0.5秒后z-index应该比台历后板小，造成翻过去的效果
+                            var timeOut1 = setInterval(function () {
+                                that.style.zIndex = 3
+                                clearInterval(timeOut1)
+                            }, 300)
+                        }
+                    })(i)
+                }
+            }
+
+
+            //每个位置有多少张日历
+            eachPaper(1, paperbox0, "paper ln0")
+            eachPaper(9, paperbox1, "paper ln1", true)
+            eachPaper(parseInt(getDrawMonthDay()[drawMonth] / 10), paperbox2, "paper ln2")
+            if (parseInt(drawDate / 10) == 0) {
+                eachPaper(9, paperbox3, "paper ln3", true)
+            } else {
+                eachPaper(9, paperbox3, "paper ln3")
+            }
+            flip(paperbox0, btn[0], parseInt(drawMonth / 10))
+            flip(paperbox1, btn[1], drawMonth % 10 - 1)
+            flip(paperbox2, btn[2], parseInt(drawDate / 10))
+            flip(paperbox3, btn[3], drawDate % 10)
+
+            //阻止过快的点击
+            body1.onclick = function () {
+                body1.style.pointerEvents = "none"
+                setTimeout(function () {
+                    body1.style.pointerEvents = "auto"
+                }, 300)
+            }
+
+
+            //每列有多少页方法
+            function eachPaper(number, paperbox, className, units) {
+                //number指该列最大翻到几
+                //是否是个位，如果是个位 从1开始
+                if (units) {
+                    var unitNumber = 0 + units
+                } else {
+                    var unitNumber = 0
+                }
+                paperbox.innerHTML = ""
+                for (var i = 0; i < number + 1 - unitNumber; i++) {
+                    var ln = document.createElement("div")
+                    ln.className = className + skinColor
+                    //是否是个位
+                    ln.innerHTML = i + unitNumber
+                    paperbox.appendChild(ln)
+                }
+            }
+
+            //日历
+
+            //给Year设置更改日期 
+            var boxYear = document.getElementsByClassName("boxYear")[0];
+            var mask = document.getElementsByClassName("mask")[0];
+            boxYear.innerHTML = drawYear
+            boxYear.onclick = function () {
+                mask.style.display = "block"
+                setTitle()
+                drawDateInterface(drawYear, drawMonth)
+            }
+
+            //点击蒙版取消更改日期
+            mask.onclick = function () {
+                mask.style.display = "none"
+            }
+
+            //阻止日历事件冒泡
+            var date = document.getElementsByClassName("date")[0]
+            date.onclick = function (e) {
+                e.stopPropagation()
+            }
+
+            //日历界面
+            var table = document.getElementsByClassName("date-context")[0];
+            function drawDateInterface(drawYear, drawMonth) {
+                table.innerHTML = "<tr class='week'><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr>"
+                var drawTime = new Date(drawYear, drawMonth - 1, 1)
+                if (drawTime.getDay() + getDrawMonthDay()[drawMonth - 1] > 35) {
+                    var anotherTr = 1
+                } else {
+                    var anotherTr = 0
+                }
+
+                //渲染日历界面方法
+                for (var i = 0; i < 5 + anotherTr; i++) {
+                    var newTr = document.createElement("Tr")
+                    if (anotherTr == 0) {
+                        newTr.className = "dateFiveRow"
+                    } else {
+                        newTr.className = "dateSixRow"
+                    }
+                    for (var j = 0; j < 7; j++) {
+                        var newTd = document.createElement("Td")
+                        newTr.appendChild(newTd)
+                        var everyDay = new Date(drawYear, drawMonth - 1, 1 - drawTime.getDay() + i * 7 + j)
+                        newTd.innerHTML = everyDay.toString().substring(8, 10)
+
+                            ; (function (newTd, everyDay) {
+                                //日历点击事件
+                                newTd.onclick = function (e) {
+                                    drawDate = newTd.innerHTML
+                                    drawMonth = everyDay.getMonth() + 1
+                                    clearSelect()
+                                    newTd.className = "selected"
+                                    changePage()
+                                    boxYear.innerHTML = drawYear
+                                }
+                            })(newTd, everyDay)
+                        //选中当前日期
+                        if (everyDay.getDate() == drawDate && everyDay.getMonth() == drawMonth - 1) {
+                            newTd.className = "selected"
+                        }
+                        //不是本月的日期呈现灰色
+                        if (everyDay.getMonth() != drawMonth - 1) {
+                            newTd.className = "datebox"
+                        }
+                    }
+                    table.appendChild(newTr)
+                }
+            }
+
+
+            //根据日历日期更改日期页
+            function changePage() {
+                if (drawMonth < 10) {
+                    var selectMonth = "0" + (drawMonth + 1)
+                }
+                setTitle()
+                eachPaper(1, paperbox0, "paper ln0")
+                if (parseInt(drawMonth / 10) == 0) {
+                    eachPaper(9, paperbox1, "paper ln1", true)
+                    flip(paperbox1, btn[1], drawMonth % 10 - 1)
+                } else {
+                    eachPaper(2, paperbox1, "paper ln1")
+                    flip(paperbox1, btn[1], drawMonth % 10)
+                }
+                eachPaper(parseInt(getDrawMonthDay()[drawMonth - 1] / 10), paperbox2, "paper ln2")
+
+                if (parseInt(drawDate / 10) == 0) {
+                    eachPaper(9, paperbox3, "paper ln3", true)
+                    flip(paperbox3, btn[3], drawDate % 10 - 1)
+                } else {
+                    eachPaper(9, paperbox3, "paper ln3")
+                    flip(paperbox3, btn[3], drawDate % 10)
+                }
+                flip(paperbox0, btn[0], parseInt(drawMonth / 10))
+                flip(paperbox2, btn[2], parseInt(drawDate / 10))
+            }
+            //清除选中
+            function clearSelect() {
+                if (table.children[6]) {
+                    var hasSix = 1
+                } else {
+                    var hasSix = 0
+                }
+                for (var i = 1; i < 6 + hasSix; i++) {
+                    for (var j = 0; j < 7; j++) {
+                        table.children[i].children[j].className = ""
+                    }
+                }
+            }
+
+
+            //设置日历头
+            var dateTitle = document.getElementsByClassName("date-title")[0];
+            var title = document.createElement("span")
+            setTitle()
+            dateTitle.insertBefore(title, afterSvg)
+
+            //向前箭头添加事件
+            beforeSvg.onclick = function () {
+                drawMonth -= 1
+                if (drawMonth < 1) {
+                    drawMonth = 12
+                    drawYear -= 1
+                }
+                drawDateInterface(drawYear, drawMonth)
+                changePage()
+                setTitle()
+                boxYear.innerHTML = drawYear
+            }
+
+            //向后箭头添加事件
+            afterSvg.onclick = function () {
+                drawMonth += 1
+                if (drawMonth > 12) {
+                    drawMonth = 1
+                    drawYear += 1
+                }
+
+                drawDateInterface(drawYear, drawMonth)
+                changePage()
+                setTitle()
+                boxYear.innerHTML = drawYear
+            }
+
+            // 设置表头方法
+            function setTitle() {
+                var showMonth = drawMonth
+                if (showMonth < 10) {
+                    var showMonth = "0" + showMonth
+                }
+                title.innerHTML = drawYear + "年" + showMonth + "月" + drawDate + "日"
+            }
+
+
+            //阻止事件冒泡
+            var skin = document.getElementsByClassName("skin")[0]
+            skin.onclick = function (e) {
+                e.stopPropagation()
+            }
+
+            //皮肤选择
+            var changeSkin = document.getElementsByClassName("changeSkin")[0]
+            var papers = document.getElementsByClassName("paper")
+            changeSkin.onclick = function () {
+                skin.style.display = "block"
+            }
+
+            var skinSelect = document.getElementsByClassName("skinSelect")
+            var boxFront = document.getElementsByClassName("front")[0]
+            var boxBack = document.getElementsByClassName("back")[0]
+            console.log(skinSelect)
+            for (var i = 0; i < skinSelect.length; i++) {
+                (function (i) {
+                    skinSelect[i].onclick = function () {
+                        skin.style.display = "none"
+                        mask.style.display = "none"
+                        console.log(i + 1)
+                        boxFront.style.background = "url(画板组合" + (i + 1) + ".jpg) no-repeat"
+                        boxBack.style.background = "url(画板组合" + (i + 1) + ".jpg) no-repeat"
+                        date.style.background = "url(日期组合" + (i + 1) + ".jpg) no-repeat";
+                        switch (i) {
+                            case 0:
+                                body1.style.color = "#4b267a"
+                                for (var j = 0; j < papers.length; j++) {
+                                    papers[j].style.backgroundColor = "#e4ebee"
+                                    papers[j].style.border = "#b6bcc7 1px solid"
+                                }
+                                skinColor = "blue"
+                                break;
+                            case 1:
+                                body1.style.color = "#b12181"
+                                for (var j = 0; j < papers.length; j++) {
+
+                                    papers[j].style.backgroundColor = "#f5adc9"
+                                    papers[j].style.border = "#e4c2e3 1px solid"
+                                }
+                                skinColor = " pink"
+                                break;
+                            case 2:
+                                body1.style.color = "#995b4c"
+                                for (var j = 0; j < papers.length; j++) {
+                                    papers[j].style.border = "#a9c0a6 1px solid"
+                                    papers[j].style.backgroundColor = "#c8e7d2"
+                                }
+                                skinColor = " green"
+                                break;
+                        }
+                    }
+                })(i)
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="backAll">
+        <div class="mask showMack">
+            <div class="skin">
+                <div class="skin-content">
+                    <span class="skin-title">蓝色心情</span>
+                    <span class="skin-title">少女风</span>
+                    <div class="each">
+                        <div>日历板：<img src="画板组合1.jpg" alt=""></div>
+                        <div>日历：<img src="日期组合1.jpg" alt=""></div>
+                        <div class="skinSelect"><span>30元</span>&nbsp;0元&nbsp;<button>选我</button></div>
+                    </div>
+                    <div class="each">
+                        <div>日历板：<img src="画板组合2.jpg" alt=""></div>
+                        <div>日历：<img src="日期组合2.jpg" alt=""></div>
+                        <div class="skinSelect"><span>30元</span>&nbsp;0元&nbsp;<button>选我</button></div>
+                    </div>
+                    <span class="skin-title">活泼绿</span>
+                    <span class="skin-title"></span>
+                    <div class="each">
+                        <div>日历板：<img src="画板组合3.jpg" alt=""></div>
+                        <div>日历：<img src="日期组合3.jpg" alt=""></div>
+                        <div class="skinSelect"><span>30元</span>&nbsp;0元&nbsp;<button>选我</button></div>
+                    </div>
+                    <div class="each">
+                       
+                    </div>
+                </div>
+
+            </div>
+            <div class="date">
+                <div class="date-title-wrap">
+                    <div class="date-title">
+                        <svg class="icon" id="beforeSvg" aria-hidden="true">
+                            <use xlink:href="#iconfanhui"></use>
+                        </svg>
+                        <svg class='icon' id="afterSvg" aria-hidden='true'>
+                            <use xlink:href='#icongengduo'></use>
+                        </svg>
+                    </div>
+                    <button class="changeSkin">更换皮肤</button>
+
+                </div>
+                <table class="date-context">
+
+                </table>
+            </div>
+        </div>
+
+        <div class="wrap">
+            <div class="paperbox l0"></div>
+            <div class="paperbox l1"></div>
+            <div class="paperbox l2"></div>
+            <div class="paperbox l3"></div>
+            <div class="box front">
+                <div class="btnBox">
+                    <button class="btn">翻回</button>
+                    <button class="btn">翻回</button>
+                    <button class="btn">翻回</button>
+                    <button class="btn">翻回</button>
+                </div>
+                <span class="boxYear"></span>
+                <span class="boxTime"></span>
+            </div>
+            <div class="box back"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
